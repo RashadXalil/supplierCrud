@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect } from 'react'
+import axios from 'axios'
 import { useState } from 'react'
 import AddSupplier from '../components/AddSupplier'
 import SupplierList from '../components/SupplierList'
@@ -22,12 +23,27 @@ const Supplier = () => {
       setSuppliers(targetSuppliers)
     }
   }
+  const addSupplier = (id, companyName, contactName, contactTitle) => {
+    let supplier = {
+      id: id,
+      companyName: companyName,
+      contactName: contactName,
+      contactTitle: contactTitle,
+    }
+    axios.post('https://northwind.vercel.app/api/suppliers', {
+      id: id,
+      companyName: companyName,
+      contactName: contactName,
+      contactTitle: contactTitle,
+    })
+    setSuppliers([...suppliers, supplier])
+  }
   return (
     <div>
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <AddSupplier />
+            <AddSupplier addSupplier={addSupplier} />
           </div>
           <div className="col-12">
             <SupplierList
